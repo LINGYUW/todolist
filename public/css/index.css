@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+:-moz-placeholder {
+	font-size: 18px;
+	color: gray;
+}
+
+::-moz-placeholder {
+	font-size: 18px;
+	color: gray;
+}
+
+input:-ms-input-placeholder {
+	font-size: 18px;
+	color: gray;
+}
+
+input::-webkit-input-placeholder {
+	font-size: 18px;
+	color: gray;
+}
+
+.icon {
+	font-size: 30px;
+	margin-right: 20px;
+}
+
+.container-fluid {
+	height: 800px;
+	padding-top: 20px;
+}
+
+.list {
+	background:aliceblue;
+	height: 100%;
+	padding-top: 10px;
+	border-radius: 5px; 
+	overflow: auto
+}
+
+.list-group-item {
+	height: 60px;
+	padding: 12px 20px;
+	border:  #F8F8F8 1px solid;
+}
+
+.search {
+	height: 45px;
+	width: 60%;
+	padding-left: 30px;
+	border: 0;
+	font-size: 18px;
+}
+
+#search_tip {
+	width: 50%;
+	background-color: #FFFFFF
+	left: 15px;
+	display: none;
+	border: 1px solid white;
+}
+
+#search_ul li {
+	height: 35px;
+	width: 50%;
+	list-style: none;
+	padding-left: 20px;
+	line-height: 35px;
+}
+
+.search:focus {
+	border: 0;
+	outline: none;
+}
+
+#search_ul li:hover {
+	background-color: aquamarine;
+}
+
+a.list-group-item:hover {
+	background-color: aquamarine;
+}
+
+.menu {
+	width: 150px;
+	background: cornsilk;
+	padding: 10px 30px;
+	position: absolute;
+	z-index: 1;
+	color: gray;
+	border-radius: 5px;
+	display: none;
+}
+
+.menu:hover {
+	background-color:darksalmon;
+	color: white;
+}
+
+
+
+a.readmore {
+	background: #075498;
+	color: #fff;
+	padding: 5px 10px;
+	float: right;
+	margin: 20px 0 0 0;
+	border-radius: 5px;
+}
+
+
+.font {
+	float: left;
+	font-size: 20px;
+	margin-bottom: 15px;
+}
+
+.form-control {
+	width: 90%;
+	float: left;
+    margin-left: 5px;
+}
+
+
+.small {
+	width: 20%;
+	margin-right: 6%;
+}
+
+a.readmore {
+	position: relative;
+	margin-top: 60px;
+	background-color:darksalmon
+}
+
+
+.mybtn {
+	width: 90px;
+	height: 30px;
+	background: rgb(0, 77, 156);
+	border-radius: 5px;
+	border: none;
+	margin-top: 220px;
+	margin-bottom: 10px;
+	margin-left: 50px;
+}
+
+
+
+
+.readmore:hover {
+	text-decoration: none;
+}
+
+.left {
+	color: black;
+	font-size: 20px;
+	width: 30%;
+	margin-left: 5px;
+}
+
+.right {
+	width: 80%;
+	margin-bottom: 10px;
+	margin-left: 30px;
+}
+

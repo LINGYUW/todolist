@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ToDoList</title>
+		<link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet" />
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<link href="css/index.css"rel="stylesheet"  />
+		<link rel="stylesheet" href="css/jquery.eeyellow.Timeline.css" />
+		<script src="js/jquery.eeyellow.Timeline.js"></script>
+		<script src="/js/check_sub.js"></script>
+		<script src="js/index.js"></script>
+	</head>
+
+	<body style="background: url(images/back.jpg) ;">
+		
+		<div class="container-fluid">
+			<!--导航栏 开始-->
+			<div class="col-md-3" id="list">
+				<div class="list-group">
+					<div class="list-group-item">
+						<form method="post" action="/search" onsubmit="return search_check()">
+							<img src="images/head1.png" width="40px" height="40px" />
+							<input class="search" type="text" onkeyup="tips(this)"  name="search_title" placeholder="请输入待办任务" />
+							<div style="text-align: center;float: right; width: 15%;height: 45px;border-left: 1px solid gray;">
+								<button type="submit" style="width: 100%; height: 100%;background: white; border: none;">
+									<span class="glyphicon glyphicon-search icon" style="color: #E0E0E0; font-size: 30px;"></span>
+								</button>
+							</div>
+						</form>
+					</div>
+					<a href="/login?tip=2" class="list-group-item">
+						<span class="glyphicon glyphicon-off icon"style="color: #E0E0E0; font-size: 20px;"></span>注销
+					</a>
+					<a href="/index?list=1" class="list-group-item ">
+						<span class="glyphicon glyphicon-asterisk icon"  style="color: #E0E0E0; font-size: 20px;"></span> 我的一天
+					</a>
+					<a href="/index?list=2" class="list-group-item ">
+						<span class="glyphicon glyphicon-pencil icon"  style="color: #E0E0E0; font-size: 20px;"></span> 待办事项
+					</a>
+					<a href="/index?list=3" class="list-group-item ">
+						<span class="glyphicon glyphicon-trash icon"  style="color: #E0E0E0; font-size: 20px;"></span> 垃圾桶
+					</a>
+					<%for(let i=0;i<left.length;i++){ %>
+					<a href="/index?list=<%=left[i].id %>" class="list-group-item " oncontextmenu="delete_list(event,<%=left[i].id %>)">
+						<span class="glyphicon glyphicon-star icon"  style="color: #E0E0E0; font-size: 20px;"></span><%=left[i].title %>
+					</a>
+					<%} %>
+					<a href="#" id="add" class="list-group-item">
+						<span class="glyphicon glyphicon-plus icon"  style="color: #E0E0E0; font-size: 20px;"></span> 新建清单
+					</a>
+				</div>
+			</div>
+			<!--导航栏 结束-->
+			
+			<!--搜索框-->
+				<div id="search_tip">
+						<ul id="search_ul" style="padding: 0;">
+							<li></li>
+						</ul>
+					</div>
+			<!--搜索框结束-->
+
+			<!--右击出现的页面 开始-->
+			<a href="#" id="a_menu">
+				<div class="menu" id="menu">删除列表</div>
+			</a>
+			<!--右击出现的页面 结束-->
+
+			<!--新建列表页面 开始-->
+			<div id="newList" style="width: 560px; height: 200px; padding-top: 70px; padding-left: 60px; display: none;  background: aliceblue; position: absolute; z-index: 5; border-radius: 5px; margin: 250px 600px">
+				<form method="post" action="/addList">
+					<input type="text" style="margin-right: 20px;" name="listName" class="form-control" placeholder="请输入新建的清单">
+					<button type="submit" onclick="my_hide()" style="color: white; background: aquamarine; border: none; border-radius: 5px; width: 60px; height: 33px;">确&nbsp;&nbsp;定</button>
+				</form>
+			</div>
+			<!--新建列表页面 结束-->
+			
+			<%
+				let now = new Date();
+				let year = now.getFullYear();
+				let month = now.getMonth()+1;
+				let day = now.getDate();
+				if(month < 10) month = "0"+month;
+				if(day < 10) day = "0"+day;
+			%>
+			<div class="col-md-9" style="height: 100%;">
+				<div class="VivaTimeline">
+					<%if(list_flag != 3 && list_flag != -1) { %>
+						<dl>
+							<dt> <span><%=year %></span> </dt>
+								<dd class="pos-left clearfix">
+									<div class="circ"></div>
+									<div class="time">
+										<span><%=month %>-<%=day %></span>	
+									</div>
+									<div class="events">
+										<div class="events-body" style="background-color:white;">
+											<span id="tips" style=" color: orange;"></span>
+											<form action="/addThing?list=<%=list_flag %>" method="post" onsubmit="return check()">
+												<span class="font">标题：</span>
+												<input type="text" class="form-control" name="title" id="title" />
+
+												<span class="font">备注：</span>
+												<textarea type="text" class="form-control" style="margin-bottom: 6px;" name="message" id="message" ></textarea>
+												
+												<span class="font">时间：</span>
+												<input class="small form-control" id="year" name="year" />
+												<input class="small form-control" id="month" name="month" />
+												<input class="small form-control" id="day" name="day" />
+											
+												<input type="submit" class="mybtn" value="提  交" style="background: darksalmon"></input>
+												<input type="reset" class="mybtn" value="重  置" style="margin-top: -85px;background: darksalmon;"></input>
+											</form>	
+										</div>
+									</div>
+								</dd>	
+					<%}%>	
+						<%for(let i=0;i<right.length;i++){
+							let time = right[i].time;
+							let begin = time.indexOf("-");
+							let down = time.substring(0,begin);
+							let up = time.substring(begin+1);
+							let color = right[i].urgent == 1?"darksalmon":(right[i].urgent == 2?"orange":"red");
+							let done_color = "orange";
+							let done_zi = "正在进行";
+							let done_icon = "glyphicon glyphicon-list-alt";
+							if(right[i].isdelete == 1){
+								done_color = "gray";
+								done_zi = "已经完成";
+								done_icon = "glyphicon glyphicon-ok";
+							}
+						%>
+						<dd class="pos-right clearfix">
+							<div class="circ"></div>
+							<div class="time">
+								<span><%=up %></span>
+								<span><%=down %></span>
+							</div>
+							<div class="events">
+								<div class="events-body" style="background-color:white; border-radius:10px;">
+									<div style="width: 15px; height: 15px; background: <%=color %>; border-radius: 100%;"></div>
+									<h2 style="float: left; margin-left: 15px;"><%=right[i].title %></h2>
+									<div style="float: right; font-size: 20px; color: <%=done_color %>;">
+										<%=done_zi %>&nbsp;&nbsp;
+										<span class="<%=done_icon %>" aria-hidden="true"></span>
+									</div>
+										<div style="width: 400px; overflow: auto; margin-top:100px;">
+											<div class="left">【备 注】</div>
+											<div class="right">
+												<%=right[i].message %>
+											</div>
+										</div>
+									<%if(list_flag != 3){ %>
+									<a href="/deleteThing?id=<%=right[i].id %>&list=<%=list_flag %> " class="readmore">已经完成&gt;&gt;</a>
+									<%} else{ %>
+									<a href="/removeThing?id=<%=right[i].id %>&list=<%=list_flag %> " class="readmore">彻底删除&gt;&gt;</a>
+									<%} %>
+								</div>
+							</div>
+						</dd>
+					
+						<%} %>
+						<%if(right.length == 0){ %>
+							<dd class="pos-right clearfix">
+								<div class="circ"></div>
+								<div class="time">
+									<span><%=year %></span>
+									<span><%=month %>-<%=day %></span>
+								</div>
+								<div class="events">
+									<div class="events-body" style="background-color:white;">
+										<div>
+											<p style="color:gray; font-size:20px">还没有事情做哦，快去看看还需要做什么!!</p>
+											<img src="/images/footer.jpg" style="width: 200px; height: 200px; border-radius:100px; margin-left:160px" >	
+										</div>
+						
+									</div>
+								</div>
+							</dd>
+						<% } %>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

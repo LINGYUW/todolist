@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>To-Do-List</title>
+		<link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet" />
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="/js/check_sub.js"></script>
+		<script type="text/javascript" src="js/scrollReveal.js"></script>
+		<link href="css/detail.css" rel="stylesheet" />
+		<script src="js/index.js"></script>
+	</head>
+
+	<body>
+		<div id="back" style="display: none; position:absolute; width:100%; height: 100%; top: 0; left: 0; z-index: 500; background: rgba(0, 78, 157, .6);" disabled="disabled">
+		</div>
+		<div class="container-fluid" style="height: 800px;padding-top: 10px;">
+			<!--导航栏 开始-->
+			<div class="col-md-3" style="background: white;height: 100%;padding-top: 10px;border-radius: 5px; overflow: auto;">
+				<div class="list-group">
+					<div class="list-group-item" style="height: 66px; padding: 10px 15px;border: 1px solid gray;">
+						<form method="post" action="/search">
+							<img src="images/head.png" width="55px" height="55px" oncontextmenu="home(event)" />
+							<input class="search" type="text" name="title" placeholder="请输入待办清单" />
+							<div style="text-align: center;background: red; float: right; width: 15%;height: 45px;border-left: 1px solid gray;">
+								<button type="submit" style="width: 100%; height: 100%;background: white; border: none;">
+									<span class="glyphicon glyphicon-search icon" style="color: gray; line-height: 45px;font-size: 25px;"></span>
+								</button>
+							</div>
+						</form>
+					</div>
+					<a href="#" class="list-group-item">
+						<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+						<span class="badge" style="background: red;">5</span>
+						web大作业
+					</a>
+					<a href="#" id="add" class="list-group-item unable">
+						<span class="glyphicon glyphicon-plus icon" aria-hidden="true"></span> 新建清单
+					</a>
+				</div>
+			</div>
+			<!--导航栏 结束-->
+			
+			<!--右击出现的页面 开始-->
+			<a href="#" id="a_menu"><div class="menu" id="menu">删除列表</div></a>
+			<a href="#" id="a_logout"><div class="menu" id="logout">退出登陆</div></a>
+			<a href="#" id="a_remove"><div class="menu" id="remove">清空回收站</div></a>
+			<!--右击出现的页面 结束-->
+			
+			<!--新建列表页面 开始-->
+			<div id="newList" style="padding-top: 70px; padding-left: 60px; display: none; width: 560px; height: 200px; background: white; position: absolute; top: 220px; left: 450px; z-index: 1000; border-radius: 5px;">
+				<form method="post" action="/addList">
+					<input type="text" style="margin-right: 20px;" name="listName" class="form-control" placeholder="请输入新建的列表名">
+					<button type="submit" onclick="my_hide()" style="color: white; background: dodgerblue; border: none; border-radius: 5px; width: 60px; height: 33px;">确&nbsp;&nbsp;定</button>
+				</form>
+			</div>
+			<!--新建列表页面 结束-->
+
+			<!--正文开始-->
+			<div class="col-md-9" style="height: 100%;">
+				<div style="height: 100%; overflow: auto;">
+					<ul class="cbp_tmtimeline">
+						<li>
+							<time class="cbp_tmtime">
+									<span>09-02</span>
+									<span>2018</span>
+							</time>
+							<div class="cbp_tmicon"></div>
+							<div class="cbp_tmlabel" data-scroll-reveal="enter right over 1s">
+								<span id="tips" style="float: right; color: orange;"></span>
+								<form action="" method="post" onsubmit="return check()">
+									<span class="wenzi">标题：</span>
+									<input type="text" class="form-control" name="title" id="title" />
+									<div class="clear"></div>
+
+									<span class="wenzi">备注：</span>
+									<input type="text" class="form-control" name="message" id="message" />
+									<div class="clear"></div>
+
+									<span class="wenzi">时间：</span>
+									<select class="small form-control" name="year">
+										<option value="10">
+											2019 </option>
+									</select>
+
+									<select class="small form-control" name="month">
+										<option value="10">
+											10 </option>
+									</select>
+
+									<select class="small form-control" name="day">
+										<option value="04">
+											04 </option>
+									</select>
+									<div class="clear"></div>
+
+									<span class="wenzi">紧急程度：</span>
+									<label class="radio-inline">
+  										<input type="radio" name="urgent" id="inlineRadio1" value="1" checked="checked"> 一般
+									</label>
+									<label class="radio-inline">
+									 	<input type="radio" name="urgent" id="inlineRadio2" value="2"> 重要
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="urgent" id="inlineRadio3" value="3"> 很重要
+									</label>
+									<div class="clear"></div>
+									<input type="submit" class="mybtn" value="提  交"></input>
+									<input type="reset" class="mybtn" value="重  置" style="margin-top: -75px;background: orange;"></input>
+									<div class="clear"></div>
+								</form>
+							</div>
+						</li>
+						
+						<li>
+							<time class="cbp_tmtime">
+									<span>09-04</span>
+									<span>2018</span>
+							</time>
+							<div class="cbp_tmicon"></div>
+							<div class="cbp_tmlabel" data-scroll-reveal="enter right over 1s">
+								<div style="width: 15px; height: 15px; background: orange; border-radius: 100%; float: left;"></div>
+								<h2 style="float: left; margin-left: 15px;">好好学习</h2>
+								<div style="float: right; font-size: 20px; color: orange;">
+									正在进行&nbsp;&nbsp;
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+								</div>
+								<div class="clear"></div>
+								<p>
+									<div style="width: 400px; float: left; overflow: auto;">
+										<div class="left">【急 缓】</div>
+										<div class="right" style="color: red;">
+											很重要
+										</div>
+
+										<div class="clear"></div>
+
+										<div class="left">【备 注】</div>
+										<div class="right">
+											好好学习，天天向上
+										</div>
+									</div>
+								</p>
+								<a href="#" class="readmore">已经完成&gt;&gt;</a>
+								<a href="/" class="readmore" style="margin-top: 40px; margin-right: -92px;">点击修改&gt;&gt;</a>
+								<!--<a href="#" class="readmore">彻底删除&gt;&gt;</a>-->
+							</div>
+						</li>
+
+						<li>
+							<time class="cbp_tmtime">
+								<span>05-03</span>
+								<span>2018</span>
+							</time>
+							<div class="cbp_tmicon"></div>
+							<div class="cbp_tmlabel" data-scroll-reveal="enter right over 1s">
+								<h2 style="float: left; margin-left: 15px;">垃圾啊</h2>
+								<div class="clear"></div>
+								<p>
+									<span class="blogpic" style="float: left;">
+												<img src="#" style="width: 150px; height: 150px;" >
+									</span>
+									<div style="width: 400px; float: left; overflow: auto;">
+										没有东西<br /><br />
+										去别处看看
+									</div>
+								</p>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			<!--正文结束-->
+		</div>
+	</body>
+
+</html>
